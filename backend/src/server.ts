@@ -1,13 +1,14 @@
 import { createServer } from "node:http";
 import { Request, Response } from "express";
+import { configurations } from "./config/configuration.js";
 import app from "./app.js";
 
-app.get("/", (_req: Request, res: Response) => {
-  res.status(200).send("<h1>Hello From Express Server</h1>");
+app.get("/health", (_req: Request, res: Response) => {
+  res.status(200).send("<h1>Server is Running...</h1>");
 });
 
 (async () => {
-  const PORT = process.env.PORT ?? 4000;
+  const PORT = configurations.PORT ?? 4000;
   const server = createServer(app);
 
   server.listen(PORT, () => {

@@ -1,6 +1,7 @@
 import { createServer } from "node:http";
 import { Request, Response } from "express";
 import { configurations } from "./config/configuration.js";
+import { databaseConnection } from "./lib/db.js";
 import app from "./app.js";
 
 app.get("/health", (_req: Request, res: Response) => {
@@ -10,6 +11,8 @@ app.get("/health", (_req: Request, res: Response) => {
 (async () => {
   const PORT = configurations.PORT ?? 4000;
   const server = createServer(app);
+
+  await databaseConnection();
 
   server.listen(PORT, () => {
     console.log(`listening at: http://127.0.0.01:${PORT}`);
